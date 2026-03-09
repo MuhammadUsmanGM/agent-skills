@@ -1,0 +1,84 @@
+{
+  "channel": "gmail|whatsapp|web_form",
+  "feature": "feature-name",
+  "generated": "YYYY-MM-DD",
+  "total_cases": 0,
+  "severity_summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "edge_cases": [
+    {
+      "id": "EC-GMAIL-001",
+      "category": "escalation_triggers",
+      "description": "Customer threatens legal action with embedded keyword in long email",
+      "input": {
+        "channel": "gmail",
+        "from_email": "angry.customer@example.com",
+        "subject": "Re: Order #4521 - Unresolved Issue",
+        "body": "I have been waiting 3 weeks for a resolution. If this is not fixed by Friday, my attorney will be filing a formal complaint.",
+        "thread_id": "thread_abc123",
+        "customer_id": "cust_789"
+      },
+      "expected_behavior": "Detect 'attorney' keyword, trigger escalation via escalate_to_human with reason='legal_mention', create ticket with priority=high, send formal acknowledgment preserving thread_id",
+      "expected_output": {
+        "escalated": true,
+        "escalation_reason": "legal_mention",
+        "ticket_priority": "high",
+        "response_channel": "gmail",
+        "response_includes_thread_id": true,
+        "response_word_count_max": 500,
+        "response_tone": "formal",
+        "tools_called_in_order": ["create_ticket", "get_customer_history", "escalate_to_human", "send_response"]
+      },
+      "severity": "critical",
+      "tags": ["escalation", "legal", "thread-continuity"]
+    },
+    {
+      "id": "EC-WHATSAPP-001",
+      "category": "quick_replies",
+      "description": "Customer sends single word 'human' triggering WhatsApp-specific escalation",
+      "input": {
+        "channel": "whatsapp",
+        "from_phone": "whatsapp:+15551112222",
+        "body": "human",
+        "customer_id": "cust_456"
+      },
+      "expected_behavior": "Detect WhatsApp-specific escalation keyword 'human', trigger immediate escalation, respond with concise confirmation under 300 chars",
+      "expected_output": {
+        "escalated": true,
+        "escalation_reason": "explicit_human_request",
+        "response_channel": "whatsapp",
+        "response_char_count_max": 300,
+        "response_tone": "conversational",
+        "tools_called_in_order": ["create_ticket", "escalate_to_human", "send_response"]
+      },
+      "severity": "critical",
+      "tags": ["escalation", "keyword", "whatsapp-specific"]
+    },
+    {
+      "id": "EC-WEB-FORM-001",
+      "category": "validation_boundaries",
+      "description": "Name field with only 1 character (below minimum 2)",
+      "input": {
+        "channel": "web_form",
+        "name": "A",
+        "email": "valid@example.com",
+        "subject": "Valid Subject Here",
+        "message": "This is a perfectly valid message with enough characters.",
+        "category": "general",
+        "priority": "medium"
+      },
+      "expected_behavior": "Reject submission with validation error: 'Name must be at least 2 characters'. Do not create ticket.",
+      "expected_output": {
+        "accepted": false,
+        "validation_error": "Name must be at least 2 characters",
+        "ticket_created": false
+      },
+      "severity": "medium",
+      "tags": ["validation", "name", "boundary"]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "skill_name": "system-prompt-generator",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I need a prompt for a chatbot that helps users fix their wifi. It should be friendly but technical. I want it to only talk about wifi, nothing else.",
+      "expected_output": "A plain-format prompt (no XML) with a clear role, numbered troubleshooting rules, an explicit out-of-scope handler, and friendly tone instruction. Should be under 150 words.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Here's a prompt I use for summarizing long documents: 'Summarize the document and output 3 bullet points.' Can you make it better?",
+      "expected_output": "The skill should identify the prompt as too vague (no output format, no length guidance, no handling for different document types), draft an improved version with a document input wrapper and clear output structure, and explain the changes without over-engineering it.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I'm building an AI that extracts flight details (departure, arrival, time, price) from an email and outputs JSON. Help me write the system prompt.",
+      "expected_output": "An XML-format prompt with instructions, at least 2 examples (one full extraction, one with missing fields returning null), and an explicit output_format block with the JSON schema. Should handle missing fields gracefully.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Write me a prompt for a code review bot that acts like a senior engineer. It should be strict but helpful.",
+      "expected_output": "A plain-format prompt with a specific engineering persona, a feedback prioritization system (e.g. BLOCKER/IMPORTANT/SUGGESTION), rules for always providing corrected code not just critique, and handling for when the code is actually good. No XML needed.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I have this prompt for a sales coach AI: 'You are a sales coach. Help users close more deals. Be motivating and give tips.' Make it production-ready.",
+      "expected_output": "The skill should identify multiple weaknesses (vague role, no qualification framework, 'motivating' is the wrong tone for a serious sales context, no context-gathering rules), rewrite it with a specific persona, MEDDIC or similar qualification framework built in, and a rule to ask for deal context before advising. Should explain each change.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Should I use XML tags in my customer support bot prompt? It's pretty short — just 5 rules about what topics to cover and what to escalate.",
+      "expected_output": "The skill should recommend against XML for a short 5-rule prompt, explain why plain numbered rules are better for this use case, and optionally show what it would look like both ways so the user can see the difference.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Write a prompt for an AI that reads a user's resume and gives feedback. It should be honest but not crushing.",
+      "expected_output": "A hybrid-format prompt with a clear reviewer persona, rules for balancing honesty with constructiveness, explicit handling for weak resumes (don't just list problems — prioritize top 3 changes), and an example showing the feedback format. Should ask about the job the resume is targeting before reviewing.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "My prompt is too long — it's 800 words and the AI seems confused by it. Can you help me cut it down?",
+      "expected_output": "The skill should ask the user to share the prompt, then apply the length calibration principles: remove rules that don't change behavior, cut vague prohibitions, eliminate motivational openers, and consolidate contradictory rules. Should produce a version under 300 words with an explanation of what was cut and why.",
+      "files": []
+    }
+  ]
+}
