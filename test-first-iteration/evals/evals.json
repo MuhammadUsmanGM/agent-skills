@@ -1,0 +1,65 @@
+{
+  "skill_name": "test-first-iteration",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I'm building a new feature for handling refund requests. Generate the edge case test files I need before I start implementing.",
+      "expected_output": "The skill should identify all 3 channels affected (gmail, whatsapp, web_form), explain it will generate tests/edge-cases-gmail.json, tests/edge-cases-whatsapp.json, tests/edge-cases-web_form.json with 20+ cases each, and run the generate-edge-cases.py script for each channel.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "What categories of edge cases must I cover for the WhatsApp channel?",
+      "expected_output": "The skill should list all required categories: escalation triggers, guardrail violations, sentiment extremes, empty/malformed input, injection attempts, multi-language, customer identity, tool execution order, knowledge base misses, plus WhatsApp-specific: message splitting, media messages, webhook validation, quick replies.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I already wrote the implementation code for a new escalation feature. Can you generate edge cases now?",
+      "expected_output": "The skill should explain the core rule: NEVER write implementation code before edge-case files exist. Should refuse to generate edge cases post-implementation and explain why test-first matters (catches design flaws, prevents rework).",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Generate edge cases for a Gmail handler that processes ticket replies and maintains thread continuity.",
+      "expected_output": "The skill should generate tests/edge-cases-gmail.json with 20+ cases covering: thread continuity (reply to closed ticket, orphaned thread_id), email parsing (HTML-only, multipart MIME, forwarded chains), length limits (500 word responses), formatting (missing subject, CC/BCC), plus universal categories.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "What's the minimum number of edge cases I need per channel?",
+      "expected_output": "The skill should state: minimum 20 edge cases per affected channel, at least 3 critical-severity cases, must cover ALL required categories. Should explain the severity levels (critical/high/medium/low) with examples.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "I have 15 edge cases for Gmail. Is that enough or do I need more?",
+      "expected_output": "The skill should say NO - 15 is below the 20 minimum. Should explain why 20+ is required (comprehensive coverage, catches edge cases before production), and help generate 5+ more cases.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Show me the format for an edge case file. What fields are required?",
+      "expected_output": "The skill should show the complete JSON structure with: channel, feature, generated date, edge_cases array. Each edge case needs: id (EC-{CHANNEL}-{NNN}), category, description, input, expected_behavior, expected_output, severity, tags.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "What severity should I assign to an edge case where the escalation trigger is bypassed due to missing sentiment check?",
+      "expected_output": "The skill should classify this as CRITICAL severity - explain that guardrail bypass and missed escalation are critical because they can lead to customer harm, legal issues, or system failures. Should reference the severity criteria table.",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "Generate edge cases for a web form that validates customer support submissions.",
+      "expected_output": "The skill should generate tests/edge-cases-web_form.json with 20+ cases covering: validation boundaries (name=1 char, subject/message below minimums), category values (invalid/missing/empty), priority edge cases, duplicate submissions, plus universal categories like injection attempts and empty input.",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "I've generated the edge cases. What's the next step before I implement?",
+      "expected_output": "The skill should explain the workflow: 1) Present summary table with counts per severity, 2) Ask user to review and approve/add/remove edge cases, 3) ONLY after approval, begin implementation. Should emphasize not skipping the review step.",
+      "files": []
+    }
+  ]
+}

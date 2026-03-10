@@ -1,0 +1,53 @@
+{
+  "skill_name": "mcp-tool-builder",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Build a new MCP tool called `get_order_status` that takes a customer ID and order ID, looks up the order from the database, and returns the status. It needs to work across all channels.",
+      "expected_output": "A complete tool implementation with: ChannelMetadata in input schema, pydantic models for input/output, channel-aware response adapter, proper tool decorator, and registration in the tool manifest. Should follow the tool template pattern.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I need to add a tool that checks if a customer is eligible for a refund. The logic is: purchase within 30 days, not used more than 3 times, and ticket priority is high. How should I structure this?",
+      "expected_output": "The skill should provide the full tool schema with ChannelMetadata, explain the core logic vs channel adaptation separation, show how to enforce tool execution order (create_ticket first), and provide the pydantic model with all required fields.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Review this tool I wrote and tell me what's wrong with it: [tool code that ignores channel_source and returns uniform responses]",
+      "expected_output": "The skill should identify: missing ChannelMetadata in schema, no channel adaptation in response, violation of channel-aware pattern. Should explain how to fix each issue and reference the response adapter pattern.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "What's the correct order to call tools in a customer interaction? I have create_ticket, send_response, get_customer_history, and search_knowledge_base.",
+      "expected_output": "The skill should state the required order: create_ticket → get_customer_history → search_knowledge_base → send_response. Should explain that create_ticket is ALWAYS first, send_response is ALWAYS last, and why this order matters.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "My WhatsApp responses are getting cut off. The tool returns a 500-word response but WhatsApp needs shorter messages. How do I fix this?",
+      "expected_output": "The skill should explain the channel length limits (300 chars preferred, 1600 max for WhatsApp), show the adapt_response() pattern, and provide code that truncates/splits responses appropriately per channel.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Scaffold a new tool called `check_sentiment` that analyzes customer message sentiment. Output should be a score from -1 to 1.",
+      "expected_output": "The skill should either run the scaffold script or provide the complete tool file with: input schema including ChannelMetadata, sentiment analysis logic, channel-aware output formatting, and proper registration.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "I'm building a tool that sends follow-up emails 24 hours after a ticket is resolved. What channel constraints should I respect?",
+      "expected_output": "The skill should explain Gmail constraints (500 word max, formal style, signature required), show the format_email_response() function, and remind about thread_id for Gmail continuity.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "Can you show me the input schema for the escalate_to_human tool? I need to make sure I'm including all the right fields.",
+      "expected_output": "The skill should provide the complete EscalationInput pydantic model with: ticket_id, reason, urgency (normal/urgent/critical), and ChannelMetadata. Should explain each field and the Kafka event publishing.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "skill_name": "postgres-crm-schema",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I need to add a column to track customer timezone. What's the correct process?",
+      "expected_output": "The skill should explain: 1) Check canonical schema first, 2) Write migration in production/database/migrations/ with proper naming, 3) Update schema.sql, 4) Update this skill's definition. Should specify TIMESTAMPTZ type and default value.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "What's the difference between the customers and customer_identifiers tables? When do I use each?",
+      "expected_output": "The skill should explain: customers is the primary record (one per customer), customer_identifiers maps multiple emails/phones/whatsapp to unified customer. Should show the cross-channel identity resolution pattern.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I'm writing a query to get all messages for a conversation. What's the correct way to access the database?",
+      "expected_output": "The skill should direct to use production/database/queries.py, show the correct asyncpg query pattern with parameterized SQL, and warn against direct SQL in handlers/tools.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Can I use SERIAL for the primary key on a new analytics table I'm creating?",
+      "expected_output": "The skill should say NO - explain that UUIDs are required for all primary keys with gen_random_uuid() default. Should explain why (distributed systems, non-sequential, security).",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I need to store API keys for channel integrations. Which table and what column type?",
+      "expected_output": "The skill should point to channel_configs.api_config (JSONB), but warn that secrets should be encrypted references not plaintext. Should mention the encryption requirement.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Run the schema validator on my schema.sql file to check if it matches the canonical definitions.",
+      "expected_output": "The skill should run python scripts/validate-schema.py --schema <path>, interpret the output, and report any missing tables, columns, type mismatches, or drift.",
+      "files": ["production/database/schema.sql"]
+    },
+    {
+      "id": 6,
+      "prompt": "What timestamp type should I use for a new created_at column? Someone on my team said TIMESTAMP is fine.",
+      "expected_output": "The skill should strongly recommend TIMESTAMPTZ (timezone-aware), explain why TIMESTAMP is wrong (timezone issues, sorting problems), and reference the schema rules.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "I'm adding a knowledge_base search feature. What index should I use for the vector embeddings?",
+      "expected_output": "The skill should show the ivfflat index with vector_cosine_ops for cosine similarity search, explain the vector(1536) type for OpenAI ada-002 embeddings, and mention pgvector extension requirement.",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "Create a migration file to add a 'last_login_at' column to the customers table.",
+      "expected_output": "The skill should provide a complete migration file with UP/DOWN sections, proper naming (NNN_description.sql), ALTER TABLE with TIMESTAMPTZ, and sensible default. Should follow the migration template.",
+      "files": []
+    }
+  ]
+}
